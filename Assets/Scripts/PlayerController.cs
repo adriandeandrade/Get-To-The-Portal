@@ -7,17 +7,10 @@ public class PlayerController : MonoBehaviour
     public float speed;
 
     Rigidbody rBody;
-    Camera viewCamera;
 
     private void Start()
     {
         rBody = GetComponent<Rigidbody>();
-        viewCamera = Camera.main;
-    }
-
-    private void Update()
-    {
-        //Look();
     }
 
     private void FixedUpdate()
@@ -32,22 +25,13 @@ public class PlayerController : MonoBehaviour
 
         if (moveInput != Vector3.zero)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveInput), 0.15f);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveInput), 0.15f);
+            rBody.MoveRotation(Quaternion.Slerp(rBody.rotation, Quaternion.LookRotation(moveInput), 0.15f));
         }
 
         rBody.MovePosition(rBody.position + moveVelocity * Time.fixedDeltaTime);
+        //rBody.MoveRotation
     }
 
-    //void Look()
-    //{
-    //    Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
-    //    RaycastHit hit;
-
-
-    //    if (Physics.Raycast(ray, out hit))
-    //    {
-    //        Vector3 point = ray.GetPoint(hit.distance);
-    //        transform.LookAt(point);
-    //    }
 
 }
