@@ -7,6 +7,10 @@ public class PlayerController : MonoBehaviour
     public float speed;
 
     Rigidbody rBody;
+    Vector3 moveInput;
+
+    // Event to keep track of when player enters a portal
+    public event System.Action OnEnterPortal;
 
     private void Start()
     {
@@ -20,18 +24,37 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        // Get the player input
+        moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        // Get direction and times it by speed var to move in corresponding direction
         Vector3 moveVelocity = moveInput.normalized * speed;
 
         if (moveInput != Vector3.zero)
         {
-            //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveInput), 0.15f);
-            rBody.MoveRotation(Quaternion.Slerp(rBody.rotation, Quaternion.LookRotation(moveInput), 0.15f));
+            // Rotate player to face direction we are moving in, only when we are actually moving
+            rBody.rotation = Quaternion.LookRotation(moveInput);
         }
 
-        rBody.MovePosition(rBody.position + moveVelocity * Time.fixedDeltaTime);
-        //rBody.MoveRotation
+        // Move player
+        rBody.MovePosition(rBody.position + moveVelocity * Time.deltaTime);
     }
 
-
+    private void OnTriggerEnter(Collider other)
+    {
+        // Check if player is touching a teleporter
+        if(other.gameObject.tag == "Teleporter")
+        {
+            // Teleport player
+            other.GetComponent<Teleporter>().Teleport(transform);
+        }
+        // Check if player is touching a portal
+        if(other.gameObject.tag == "Portal")
+        {
+            // End level if is the player is touching a portal
+            if(OnEnterPortal != null)
+            {
+                OnEnterPortal();
+            }
+        }
+    }
 }
