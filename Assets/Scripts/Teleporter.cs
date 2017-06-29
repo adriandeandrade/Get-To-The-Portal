@@ -6,19 +6,13 @@ public class Teleporter : MonoBehaviour
 {
     public Transform teleportDestinationTarget;
     public bool isTeleporter;
+    public Color teleporterColor;
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    print("collided");
-    //    if (isTeleporter)
-    //    {
-    //        if (other.gameObject.tag == "Player")
-    //        {
-                
-    //            other.transform.position = teleportDestinationTarget.position;
-    //        }
-    //    }
-    //}
+    private void Start()
+    {
+        Renderer rend = GameObject.Find("TeleporterModel").GetComponent<Renderer>();
+        rend.material.SetColor("Teleporter", teleporterColor);
+    }
 
     public void Teleport(Transform objectToTeleport)
     {

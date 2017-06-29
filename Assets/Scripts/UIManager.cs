@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     public GameObject levelCompleteUI;
+    bool isPaused;
 
     GameObject player;
 
@@ -17,5 +18,6 @@ public class UIManager : MonoBehaviour
     public void EndLevelUI()
     {
         levelCompleteUI.SetActive(true);
+        isPaused = true;
     }
 }
