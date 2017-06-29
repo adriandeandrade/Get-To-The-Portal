@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        if(FindObjectOfType<PlayerController>() != null)
+        if (FindObjectOfType<PlayerController>() != null)
         {
             target = FindObjectOfType<PlayerController>().transform;
         }
@@ -23,7 +23,6 @@ public class CameraController : MonoBehaviour
         Vector3 desiredPos = target.position + offset;
         Vector3 smoothedPos = Vector3.Lerp(transform.position, desiredPos, smoothTime);
         transform.position = smoothedPos;
-
         transform.LookAt(target);
     }
 

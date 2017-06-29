@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
         if(other.gameObject.tag == "Teleporter")
         {
             // Teleport player
-            other.GetComponent<Teleporter>().Teleport(transform);
+            StartCoroutine(other.GetComponent<Teleporter>().Teleport(transform, 2f));
         }
         // Check if player is touching a portal
         if(other.gameObject.tag == "Portal")
