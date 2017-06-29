@@ -10,8 +10,8 @@ public class Teleporter : MonoBehaviour
 
     private void Start()
     {
-        Renderer rend = GameObject.Find("TeleporterModel").GetComponent<Renderer>();
-        rend.material.SetColor("Teleporter", teleporterColor);
+        Renderer rend = GetComponentInChildren<Renderer>();
+        rend.material.color = teleporterColor;
     }
 
     public void Teleport(Transform objectToTeleport)
