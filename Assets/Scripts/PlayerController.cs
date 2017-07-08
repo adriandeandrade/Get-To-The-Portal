@@ -6,9 +6,11 @@ public class PlayerController : MonoBehaviour
 {
     public float speed;
     public float distanceToCollision = 3f;
+    public WorldSpaceUI worldSpaceUI;
 
     Rigidbody rBody;
     Vector3 moveInput;
+
 
     public event System.Action OnEnterPortal;
 
@@ -20,7 +22,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-        CheckCollision();
+        IsColliding();
     }
 
     void Move()
@@ -33,12 +35,11 @@ public class PlayerController : MonoBehaviour
             rBody.rotation = Quaternion.LookRotation(moveInput);
         }
 
-        if (!CheckCollision())
+        if (!IsColliding())
         {
             rBody.MovePosition(rBody.position + moveVelocity * Time.deltaTime);
 
         }
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,6 +57,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Teleporter")
         {
+            worldSpaceUI.SetTextContentAndPosition("Press E To Teleport", other.transform.position, other.gameObject);
             if (Input.GetKeyDown(KeyCode.E))
             {
                 other.GetComponent<Teleporter>().Teleport(transform);
@@ -63,7 +65,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    bool CheckCollision()
+    bool IsColliding()
     {
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         RaycastHit hit;
