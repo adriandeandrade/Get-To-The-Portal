@@ -15,16 +15,8 @@ public class Teleporter : MonoBehaviour
         rend.material.color = teleporterColor;
     }
 
-    //public void Teleport(Transform objectToTeleport)
-    //{
-        
-    //}
-
-    public IEnumerator Teleport(Transform objectToTeleport, float teleportDelay)
+    public void Teleport(Transform objectToTeleport)
     {
-        yield return new WaitForSeconds(teleportDelay);
-
         objectToTeleport.position = teleportDestinationTarget.position;
-        Destroy(Instantiate(teleportEffect, objectToTeleport.position, Quaternion.identity), 1);
     }
 }

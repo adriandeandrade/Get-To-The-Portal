@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed;
+    public float distanceToCollision = 3f;
 
     Rigidbody rBody;
     Vector3 moveInput;
 
-    // Event to keep track of when player enters a portal
     public event System.Action OnEnterPortal;
 
     private void Start()
@@ -20,41 +20,61 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        CheckCollision();
     }
 
     void Move()
     {
-        // Get the player input
         moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        // Get direction and times it by speed var to move in corresponding direction
         Vector3 moveVelocity = moveInput.normalized * speed;
 
         if (moveInput != Vector3.zero)
         {
-            // Rotate player to face direction we are moving in, only when we are actually moving
             rBody.rotation = Quaternion.LookRotation(moveInput);
         }
 
-        // Move player
-        rBody.MovePosition(rBody.position + moveVelocity * Time.deltaTime);
+        if (!CheckCollision())
+        {
+            rBody.MovePosition(rBody.position + moveVelocity * Time.deltaTime);
+
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // Check if player is touching a teleporter
-        if(other.gameObject.tag == "Teleporter")
+        if (other.gameObject.tag == "Portal")
         {
-            // Teleport player
-            StartCoroutine(other.GetComponent<Teleporter>().Teleport(transform, 2f));
-        }
-        // Check if player is touching a portal
-        if(other.gameObject.tag == "Portal")
-        {
-            // End level if is the player is touching a portal
-            if(OnEnterPortal != null)
+            if (OnEnterPortal != null)
             {
                 OnEnterPortal();
             }
         }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Teleporter")
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                other.GetComponent<Teleporter>().Teleport(transform);
+            }
+        }
+    }
+
+    bool CheckCollision()
+    {
+        Vector3 forward = transform.TransformDirection(Vector3.forward);
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, forward, out hit, distanceToCollision))
+        {
+            if (hit.collider.tag == "Obstacle")
+            {
+                print("Object was hit");
+                return true;
+            }
+        }
+        return false;
     }
 }
