@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     public float distanceToCollision = 3f;
     public WorldSpaceUI worldSpaceUI;
 
+    bool isStandingOnTeleporter = false;
+
     Rigidbody rBody;
     Vector3 moveInput;
 
@@ -17,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rBody = GetComponent<Rigidbody>();
+        isStandingOnTeleporter = false;
     }
 
     private void FixedUpdate()
@@ -38,7 +41,18 @@ public class PlayerController : MonoBehaviour
         if (!IsColliding())
         {
             rBody.MovePosition(rBody.position + moveVelocity * Time.deltaTime);
+        }
+    }
 
+    public bool IsStandingOnTeleporter()
+    {
+        if (isStandingOnTeleporter)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -62,6 +76,14 @@ public class PlayerController : MonoBehaviour
             {
                 other.GetComponent<Teleporter>().Teleport(transform);
             }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Teleporter")
+        {
+            worldSpaceUI.DisableUI();
         }
     }
 
