@@ -13,35 +13,24 @@ public class PlayerController : MonoBehaviour
     Rigidbody rBody;
     Vector3 moveInput;
 
-
     public event System.Action OnEnterPortal;
 
-    private void Start()
+    void Start()
     {
         rBody = GetComponent<Rigidbody>();
         isStandingOnTeleporter = false;
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         Move();
-        IsColliding();
     }
 
     void Move()
     {
         moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         Vector3 moveVelocity = moveInput.normalized * speed;
-
-        if (moveInput != Vector3.zero)
-        {
-            rBody.rotation = Quaternion.LookRotation(moveInput);
-        }
-
-        if (!IsColliding())
-        {
-            rBody.MovePosition(rBody.position + moveVelocity * Time.deltaTime);
-        }
+        rBody.MovePosition(rBody.position + moveVelocity * Time.deltaTime);
     }
 
     public bool IsStandingOnTeleporter()
@@ -56,7 +45,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Portal")
         {
@@ -67,7 +56,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Teleporter")
         {
@@ -79,26 +68,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    void OnCollisionEnter(Collision other)
+    {
+        if(other.collider.tag == "Obstacle")
+        {
+            moveInput = Vector3.zero;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Teleporter")
         {
             worldSpaceUI.DisableUI();
         }
-    }
-
-    bool IsColliding()
-    {
-        Vector3 forward = transform.TransformDirection(Vector3.forward);
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, forward, out hit, distanceToCollision))
-        {
-            if (hit.collider.tag == "Obstacle")
-            {
-                print("Object was hit");
-                return true;
-            }
-        }
-        return false;
     }
 }

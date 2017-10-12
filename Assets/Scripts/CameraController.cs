@@ -8,7 +8,9 @@ public class CameraController : MonoBehaviour
     public float smoothTime = 0.125f;
     public Vector3 offset;
 
-    private void Start()
+    private Vector3 velocity = Vector3.zero;
+
+    void Start()
     {
         if (FindObjectOfType<PlayerController>() != null)
         {
@@ -16,24 +18,12 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    private void Update()
+    void FixedUpdate()
     {
-        target = target = FindObjectOfType<PlayerController>().transform;
-    }
-
-    public Vector3 GetCameraOffset()
-    {
-        return offset;
-    }
-
-    private void LateUpdate()
-    {
-
         Vector3 desiredPos = target.position + offset;
-        Vector3 smoothedPos = Vector3.Lerp(transform.position, desiredPos, smoothTime);
-        transform.LookAt(target);
+        Vector3 smoothedPos = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, smoothTime);
         transform.position = smoothedPos;
-
+        transform.LookAt(target);
     }
 }
 

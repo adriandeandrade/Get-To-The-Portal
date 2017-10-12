@@ -16,10 +16,7 @@ public class WorldSpaceUI : MonoBehaviour
             teleportInstructionText.gameObject.SetActive(true);
             teleportInstructionText.text = textToDisplay;
             teleportInstructionText.rectTransform.position = position + offset;
-        } else
-        {
-            
-        }
+        } 
     }
 
     public void DisableUI()
