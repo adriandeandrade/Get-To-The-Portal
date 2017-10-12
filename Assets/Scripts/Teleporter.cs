@@ -9,14 +9,47 @@ public class Teleporter : MonoBehaviour
     public Color teleporterColor;
     public ParticleSystem teleportEffect;
 
-    private void Start()
+    public WorldSpaceUIManager worldSpaceUI;
+
+    void Start()
     {
         Renderer rend = GetComponentInChildren<Renderer>();
         rend.material.color = teleporterColor;
     }
 
-    public void Teleport(Transform objectToTeleport)
+    void OnTriggerEnter(Collider other)
     {
-        objectToTeleport.position = teleportDestinationTarget.position;
+        if (other.gameObject.tag == "Player")
+        {
+            print("Collided with teleporter");
+        }
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (isTeleporter)
+        {
+            if (other.gameObject.tag == "Player")
+            {
+                worldSpaceUI.SetTextContentAndPosition("Press E To Teleport", other.transform.position, other.gameObject);
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    Teleport(other.transform);
+                }
+            }
+        }
+    }
+
+    private void Teleport(Transform objectToTeleport)
+    {
+        objectToTeleport.transform.position = teleportDestinationTarget.transform.position;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            worldSpaceUI.DisableUI();
+        }
     }
 }

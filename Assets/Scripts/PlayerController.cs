@@ -5,10 +5,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed;
-    public float distanceToCollision = 3f;
-    public WorldSpaceUI worldSpaceUI;
-
-    bool isStandingOnTeleporter = false;
 
     Rigidbody rBody;
     Vector3 moveInput;
@@ -18,7 +14,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rBody = GetComponent<Rigidbody>();
-        isStandingOnTeleporter = false;
     }
 
     void FixedUpdate()
@@ -26,23 +21,12 @@ public class PlayerController : MonoBehaviour
         Move();
     }
 
+    // Player movement
     void Move()
     {
         moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         Vector3 moveVelocity = moveInput.normalized * speed;
         rBody.MovePosition(rBody.position + moveVelocity * Time.deltaTime);
-    }
-
-    public bool IsStandingOnTeleporter()
-    {
-        if (isStandingOnTeleporter)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -56,31 +40,5 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.tag == "Teleporter")
-        {
-            worldSpaceUI.SetTextContentAndPosition("Press E To Teleport", other.transform.position, other.gameObject);
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                other.GetComponent<Teleporter>().Teleport(transform);
-            }
-        }
-    }
-
-    void OnCollisionEnter(Collision other)
-    {
-        if(other.collider.tag == "Obstacle")
-        {
-            moveInput = Vector3.zero;
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Teleporter")
-        {
-            worldSpaceUI.DisableUI();
-        }
-    }
+    
 }
