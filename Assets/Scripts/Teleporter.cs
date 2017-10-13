@@ -22,35 +22,32 @@ public class Teleporter : MonoBehaviour
         if (isTeleporter && other.gameObject.CompareTag("Player"))
         {
             interactionBar.gameObject.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                Teleport(other.transform);
-            }
         }
     }
 
     void OnTriggerStay(Collider other)
     {
-        if (isTeleporter && other.gameObject.CompareTag("Player"))
+        // This is where the actual teleport happens
+        if (isTeleporter && other.gameObject.CompareTag("Player")) // Check if we are indeed standing on a teleporter, not a destination.
         {
-            if (interactionBar.GetComponent<InteractionBar>().isComplete)
+            if (interactionBar.GetComponent<InteractionBar>().isComplete) // Check to see if the progress bar is full.
             {
-                Teleport(other.transform);
-                interactionBar.GetComponent<InteractionBar>().currentValue = 0;
+                Teleport(other.transform); // Teleport the player
+                interactionBar.GetComponent<InteractionBar>().currentValue = 0; // Set the progress bar back to 0.
             }
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (isTeleporter && other.gameObject.CompareTag("Player"))
+        if (isTeleporter && other.gameObject.CompareTag("Player")) // Check if the player is standing on the teleporter.
         {
-            interactionBar.gameObject.SetActive(false);
+            interactionBar.gameObject.SetActive(false); // Disable the interaction bar when player steps off teleporter.
         }
     }
 
     private void Teleport(Transform objectToTeleport)
     {
-        objectToTeleport.transform.position = teleportDestinationTarget.transform.position;
+        objectToTeleport.transform.position = teleportDestinationTarget.transform.position; // Teleport.k
     }
 }

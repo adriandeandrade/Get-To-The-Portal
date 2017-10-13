@@ -16,7 +16,7 @@ public class InteractionBar : MonoBehaviour
 
     void Start()
     {
-        loadingBar.fillAmount = 0;
+        loadingBar.fillAmount = 0; // Set fillAmount to 0 when level starts.
     }
 
     // Update is called once per frame
