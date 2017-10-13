@@ -8,8 +8,12 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody rBody;
     Vector3 moveInput;
+    Vector3 moveVelocity;
+
+    bool gameOver = false;
 
     public event System.Action OnEnterPortal;
+    public event System.Action OnCoinPickup;
 
     void Start()
     {
@@ -24,21 +28,33 @@ public class PlayerController : MonoBehaviour
     // Player movement
     void Move()
     {
-        moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        Vector3 moveVelocity = moveInput.normalized * speed;
-        rBody.MovePosition(rBody.position + moveVelocity * Time.deltaTime);
+        if (!gameOver)
+        {
+            moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+            moveVelocity = moveInput.normalized * speed;
+            rBody.MovePosition(rBody.position + moveVelocity * Time.deltaTime);
+        }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Portal")
+        if (other.gameObject.CompareTag("Portal"))
         {
+            gameOver = true;
             if (OnEnterPortal != null)
             {
                 OnEnterPortal();
             }
         }
+
+        if (other.gameObject.CompareTag("Coin"))
+        {
+            if (OnCoinPickup != null)
+            {
+                OnCoinPickup();
+            }
+        }
     }
 
-    
+
 }
