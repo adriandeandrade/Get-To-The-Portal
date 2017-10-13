@@ -49,6 +49,8 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.CompareTag("Coin"))
         {
+            AudioManager.instance.Play("PickupCoin");
+            //FindObjectOfType<AudioManager>().Play("PickupCoin");
             if (OnCoinPickup != null)
             {
                 OnCoinPickup();

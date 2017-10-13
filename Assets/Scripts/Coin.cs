@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-
     public ParticleSystem coinPickupEffect;
 
     void OnTriggerEnter(Collider other)
