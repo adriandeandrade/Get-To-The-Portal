@@ -5,11 +5,11 @@ using UnityEngine;
 public class Teleporter : MonoBehaviour
 {
     public Transform teleportDestinationTarget;
-    public bool isTeleporter;
     public Color teleporterColor;
     public ParticleSystem teleportEffect;
+    public Transform interactionBar;
 
-    public WorldSpaceUIManager worldSpaceUI;
+    public bool isTeleporter;
 
     void Start()
     {
@@ -19,37 +19,38 @@ public class Teleporter : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (isTeleporter && other.gameObject.CompareTag("Player"))
         {
-            print("Collided with teleporter");
+            interactionBar.gameObject.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Teleport(other.transform);
+            }
         }
     }
 
     void OnTriggerStay(Collider other)
     {
-        if (isTeleporter)
+        if (isTeleporter && other.gameObject.CompareTag("Player"))
         {
-            if (other.gameObject.tag == "Player")
+            if (interactionBar.GetComponent<InteractionBar>().isComplete)
             {
-                worldSpaceUI.SetTextContentAndPosition("Press E To Teleport", other.transform.position, other.gameObject);
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    Teleport(other.transform);
-                }
+                Teleport(other.transform);
+                interactionBar.GetComponent<InteractionBar>().currentValue = 0;
             }
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (isTeleporter && other.gameObject.CompareTag("Player"))
+        {
+            interactionBar.gameObject.SetActive(false);
         }
     }
 
     private void Teleport(Transform objectToTeleport)
     {
         objectToTeleport.transform.position = teleportDestinationTarget.transform.position;
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            worldSpaceUI.DisableUI();
-        }
     }
 }

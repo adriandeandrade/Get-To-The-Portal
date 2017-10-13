@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     bool isPaused;
 
     GameObject player;
+    GameObject teleporter;
 
     private void Start()
     {
