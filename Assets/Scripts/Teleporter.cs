@@ -25,6 +25,14 @@ public class Teleporter : MonoBehaviour
         }
     }
 
+    void OnTriggerExit(Collider other)
+    {
+        if (isTeleporter && other.gameObject.CompareTag("Player")) // Check if the player is standing on the teleporter.
+        {
+            interactionBar.gameObject.SetActive(false); // Disable the interaction bar when player steps off teleporter.
+        }
+    }
+
     void OnTriggerStay(Collider other)
     {
         // This is where the actual teleport happens
@@ -38,16 +46,8 @@ public class Teleporter : MonoBehaviour
         }
     }
 
-    void OnTriggerExit(Collider other)
-    {
-        if (isTeleporter && other.gameObject.CompareTag("Player")) // Check if the player is standing on the teleporter.
-        {
-            interactionBar.gameObject.SetActive(false); // Disable the interaction bar when player steps off teleporter.
-        }
-    }
-
     private void Teleport(Transform objectToTeleport)
     {
-        objectToTeleport.transform.position = teleportDestinationTarget.transform.position; // Teleport.k
+        objectToTeleport.transform.position = teleportDestinationTarget.transform.position; // Teleport
     }
 }

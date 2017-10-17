@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         player = FindObjectOfType<PlayerController>().gameObject;
-        player.GetComponent<PlayerController>().OnEnterPortal += EndLevelUI;
+        //player.GetComponent<PlayerController>().OnEnterPortal += EndLevelUI;
     }
 
     public void EndLevelUI()

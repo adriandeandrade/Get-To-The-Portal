@@ -10,13 +10,13 @@ public class PlayerController : MonoBehaviour
     Vector3 moveInput;
     Vector3 moveVelocity;
 
-    bool gameOver = false;
+    private GameManager gameManager;
 
-    public event System.Action OnEnterPortal;
     public event System.Action OnCoinPickup;
 
     void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
         rBody = GetComponent<Rigidbody>();
     }
 
@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     // Player movement
     void Move()
     {
-        if (!gameOver)
+        if (!GameManager.GameOver)
         {
             moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
             moveVelocity = moveInput.normalized * speed;
@@ -40,17 +40,12 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Portal"))
         {
-            gameOver = true;
-            if (OnEnterPortal != null)
-            {
-                OnEnterPortal();
-            }
+            gameManager.EndLevel();
         }
 
         if (other.gameObject.CompareTag("Coin"))
         {
             AudioManager.instance.Play("PickupCoin");
-            //FindObjectOfType<AudioManager>().Play("PickupCoin");
             if (OnCoinPickup != null)
             {
                 OnCoinPickup();
