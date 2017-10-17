@@ -7,12 +7,22 @@ public class Teleporter : MonoBehaviour
     public Transform teleportDestinationTarget;
     public GameObject interactionBar;
 
-    public bool isTeleporter;
+    new ParticleSystem particleSystem;
+    ParticleSystem.MainModule psMainModule;
+
+    [SerializeField]
+    private bool isTeleporter;
+
+    void Start()
+    {
+        
+    }
 
     void OnTriggerEnter(Collider other)
     {
         if (isTeleporter && other.gameObject.CompareTag("Player"))
         {
+            psMainModule.startColor = Color.red;
             interactionBar.SetActive(true);
         }
     }
@@ -22,7 +32,7 @@ public class Teleporter : MonoBehaviour
         if (isTeleporter && other.gameObject.CompareTag("Player")) // Check if the player is standing on the teleporter.
         {
             interactionBar.SetActive(false); // Disable the interaction bar when player steps off teleporter.
-
+            psMainModule.startColor = Color.white;
         }
     }
 
