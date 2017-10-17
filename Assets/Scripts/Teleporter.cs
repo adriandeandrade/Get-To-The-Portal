@@ -5,23 +5,15 @@ using UnityEngine;
 public class Teleporter : MonoBehaviour
 {
     public Transform teleportDestinationTarget;
-    public Color teleporterColor;
-    public ParticleSystem teleportEffect;
-    public Transform interactionBar;
+    public GameObject interactionBar;
 
     public bool isTeleporter;
-
-    void Start()
-    {
-        Renderer rend = GetComponentInChildren<Renderer>();
-        rend.material.color = teleporterColor;
-    }
 
     void OnTriggerEnter(Collider other)
     {
         if (isTeleporter && other.gameObject.CompareTag("Player"))
         {
-            interactionBar.gameObject.SetActive(true);
+            interactionBar.SetActive(true);
         }
     }
 
@@ -29,7 +21,8 @@ public class Teleporter : MonoBehaviour
     {
         if (isTeleporter && other.gameObject.CompareTag("Player")) // Check if the player is standing on the teleporter.
         {
-            interactionBar.gameObject.SetActive(false); // Disable the interaction bar when player steps off teleporter.
+            interactionBar.SetActive(false); // Disable the interaction bar when player steps off teleporter.
+
         }
     }
 
