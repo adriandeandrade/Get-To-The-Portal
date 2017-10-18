@@ -8,21 +8,23 @@ public class Teleporter : MonoBehaviour
     public GameObject interactionBar;
 
     new ParticleSystem particleSystem;
-    ParticleSystem.MainModule psMainModule;
+    ParticleSystem.MainModule particleSystemMainModule;
 
     [SerializeField]
     private bool isTeleporter;
 
     void Start()
     {
-        
+        Transform ringParticle = transform.GetChild(1); // Get the ring particle system in the teleporter instance
+        particleSystem = ringParticle.GetComponent<ParticleSystem>();
+        particleSystemMainModule = particleSystem.main;
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (isTeleporter && other.gameObject.CompareTag("Player"))
         {
-            psMainModule.startColor = Color.red;
+            particleSystemMainModule.startColor = Color.red;
             interactionBar.SetActive(true);
         }
     }
@@ -31,8 +33,8 @@ public class Teleporter : MonoBehaviour
     {
         if (isTeleporter && other.gameObject.CompareTag("Player")) // Check if the player is standing on the teleporter.
         {
+            particleSystemMainModule.startColor = Color.white;
             interactionBar.SetActive(false); // Disable the interaction bar when player steps off teleporter.
-            psMainModule.startColor = Color.white;
         }
     }
 

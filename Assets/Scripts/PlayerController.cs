@@ -11,12 +11,12 @@ public class PlayerController : MonoBehaviour
     Vector3 moveVelocity;
 
     private GameManager gameManager;
-
-    public event System.Action OnCoinPickup;
+    private ScoreManager scoreManager;
 
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        scoreManager = gameManager.GetComponent<ScoreManager>();
         rBody = GetComponent<Rigidbody>();
     }
 
@@ -24,8 +24,7 @@ public class PlayerController : MonoBehaviour
     {
         Move();
     }
-
-    // Player movement
+    
     void Move()
     {
         if (!GameManager.GameOver)
@@ -46,10 +45,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Coin"))
         {
             AudioManager.instance.Play("PickupCoin");
-            if (OnCoinPickup != null)
-            {
-                OnCoinPickup();
-            }
+            scoreManager.IncrementScore();
         }
     }
 
