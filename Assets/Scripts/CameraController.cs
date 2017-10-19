@@ -14,12 +14,19 @@ public class CameraController : MonoBehaviour
     {
         if (FindObjectOfType<PlayerController>() != null)
         {
-            target = FindObjectOfType<PlayerController>().transform;
+            if(target.GetComponent<PlayerController>().isActivePlayer && !GameManager.GameOver)
+            {
+                target = FindObjectOfType<PlayerController>().transform;
+            } else
+            {
+                target = null;
+            }
         }
     }
 
     void FixedUpdate()
     {
+        if (GameManager.GameOver) return;
         Vector3 desiredPos = target.position + offset;
         Vector3 smoothedPos = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, smoothTime);
         transform.position = smoothedPos;

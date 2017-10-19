@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public bool isActivePlayer;
     public float speed;
 
     Rigidbody rBody;
@@ -12,6 +13,8 @@ public class PlayerController : MonoBehaviour
 
     private GameManager gameManager;
     private ScoreManager scoreManager;
+
+    public GameObject playerPrefab;
 
     void Start()
     {
@@ -24,7 +27,7 @@ public class PlayerController : MonoBehaviour
     {
         Move();
     }
-    
+
     void Move()
     {
         if (!GameManager.GameOver)

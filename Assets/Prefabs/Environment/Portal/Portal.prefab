@@ -70,6 +70,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4138180513961732}
   - component: {fileID: 65441496225761134}
+  - component: {fileID: 65078100879089402}
+  - component: {fileID: 65154266736132076}
   - component: {fileID: 114117933779912402}
   m_Layer: 0
   m_Name: Portal
@@ -113,7 +115,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1674520509560274}
   m_LocalRotation: {x: -0, y: -0.051241074, z: -0, w: 0.9986863}
-  m_LocalPosition: {x: -7.82, y: 11.85, z: -6.26}
+  m_LocalPosition: {x: -7.82, y: 50.6, z: -6.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4876010294991870}
@@ -210,7 +212,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: dcb200857893a5649968ac7c4a4a924b, type: 2}
+  - {fileID: 2100000, guid: e03e6b9395cbf3647bc5ed2bb2fbb017, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -244,6 +246,30 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1569374890697106}
   m_Mesh: {fileID: 4300000, guid: b19d26d599732ba44a2325aad3faf159, type: 3}
+--- !u!65 &65078100879089402
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1674520509560274}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2558201, y: 1, z: 0.29391736}
+  m_Center: {x: 0.0024763667, y: 0.5, z: 0.44657704}
+--- !u!65 &65154266736132076
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1674520509560274}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2558201, y: 1, z: 0.29029846}
+  m_Center: {x: 0.0024763688, y: 0.5, z: -0.5093455}
 --- !u!65 &65441496225761134
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -254,8 +280,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.2929535, y: 1.7400582, z: 1.2348404}
-  m_Center: {x: -0.0025072098, y: 0.87492764, z: -0.027579784}
+  m_Size: {x: 0.08957362, y: 1.4198413, z: 0.7140194}
+  m_Center: {x: -0.006723918, y: 0.7148192, z: -0.022547424}
 --- !u!108 &108441475401884178
 Light:
   m_ObjectHideFlags: 1
@@ -303,3 +329,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a620170b6245a49b203be96186ffb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerExplodeEffect: {fileID: 0}
