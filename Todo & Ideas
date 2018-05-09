@@ -1,0 +1,24 @@
+****Game Mechanics / Ideas****
+- Teleporter system
+	When the player steps over a teleporter, and a destination teleporter is available, teleport the player to said destination teleporter. On collision, show a message saying which button to press to start teleporting. The teleportation should have a 1 second delay and a 3 second cooldown so instant teleportation can't happen.
+
+- Portal system
+	This is the way to get from one level to the other. Sometimes teleporters will lead to a different part of the level but will look different so the player can differentiate them. The only way to unlock the portal would be to trigger a part of the level. For example passing a certain obstacle or opening a certain gate. A particle effect for the portal opening would be nice. 
+
+- Obstacles
+	To keep the game simple like it supposed to be, only a handful of obstacles will appear in levels. Things like moving platforms and spinning blades will be implemented but also simple ai which will be able to hit you off the level or damage you and kill you. Simple stuff!
+
+- Decision making
+	Decisions seem to be a big thing lately in games. A system where there are multiple routes you can take to complete a level which bring different benifits to the player. For example one route has a enemy guarding it but the other has an inanimate obstacle but the one with the enemy has a bonus coin at the end of it. Stuff like that nothing longterm or story changing.
+
+- 
+
+****TODO****
+
+- Fix camera
+- Add delay to teleporting
+- Create teleportation particle effect
+- Fix teleporter
+- Fix world space ui
+
+
