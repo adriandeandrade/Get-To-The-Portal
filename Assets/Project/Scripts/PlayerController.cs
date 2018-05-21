@@ -16,19 +16,24 @@ public class PlayerController : MonoBehaviour
 
     public GameObject playerPrefab;
 
-    void Start()
+    private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
         scoreManager = gameManager.GetComponent<ScoreManager>();
         rBody = GetComponent<Rigidbody>();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         Move();
     }
 
-    void Move()
+    private void Update()
+    {
+        CheckOutOfBounds();
+    }
+
+    private void Move()
     {
         if (!GameManager.GameOver)
         {
@@ -38,7 +43,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Portal"))
         {
@@ -51,6 +56,17 @@ public class PlayerController : MonoBehaviour
             scoreManager.IncrementScore();
         }
     }
+
+    private void CheckOutOfBounds()
+    {
+        if(!GameManager.GameOver)
+        {
+            if(transform.position.y < 5)
+            {
+                gameManager.OutOfBounds();
+            }
+        }
+    } 
 
 
 }

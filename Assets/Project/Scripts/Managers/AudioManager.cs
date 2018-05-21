@@ -6,7 +6,7 @@ using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
-    public Sound[] sounds;
+    [SerializeField] private Sound[] sounds;
 
     public static AudioManager instance;
 
@@ -15,7 +15,7 @@ public class AudioManager : MonoBehaviour
         Play("Theme");
     }
 
-    void Awake()
+    private void Awake()
     {
         if (instance == null)
         {
