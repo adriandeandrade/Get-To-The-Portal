@@ -9,27 +9,32 @@ public class GameManager : MonoBehaviour
     public static bool GameOver;
 
     [HideInInspector] public GameObject player;
+    public GameObject playerPrefab;
 
-    [SerializeField] private GameObject playerPrefab;
+    public UnitSelection unitSelection;
+
     [SerializeField] private Vector3 playerSpawnPos;
 
+    public int currentSplits = 1;
+    public int maxSplits = 2;
+
+    private void Awake()
+    {
+        unitSelection = FindObjectOfType<UnitSelection>();
+    }
 
     private void Start()
     {
         GameOver = false;
         player = Instantiate(playerPrefab, playerSpawnPos, Quaternion.identity);
-    }
-
-    private void Update()
-    {
-        
+        player.GetComponent<Player>().selected = true;
     }
 
     public void EndLevel()
     {
         GameOver = true;
         UIManager.instance.ActivateUI("gameOver");
-        if(player != null)
+        if (player != null)
         {
             Destroy(player);
         }
@@ -39,7 +44,6 @@ public class GameManager : MonoBehaviour
     {
         GameOver = true;
         UIManager.instance.ActivateUI("outOfBounds");
-        //player = Instantiate(playerPrefab, playerSpawnPos, Quaternion.identity);
         player = null;
     }
 
@@ -47,10 +51,10 @@ public class GameManager : MonoBehaviour
     {
         GameOver = false;
         UIManager.instance.DeactivateUI("outOfBounds");
-        Reset();
+        ResetCurrentLevel();
     }
 
-    private void Reset()
+    private void ResetCurrentLevel()
     {
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);

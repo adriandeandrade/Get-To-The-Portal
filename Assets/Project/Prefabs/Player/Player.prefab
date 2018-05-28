@@ -24,8 +24,8 @@ GameObject:
   - component: {fileID: 23464469000429080}
   - component: {fileID: 54054301045705448}
   - component: {fileID: 114323753980749550}
-  - component: {fileID: 114344990623646932}
-  m_Layer: 0
+  - component: {fileID: 114018115780914872}
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -58,6 +58,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -113,6 +114,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114018115780914872
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1223689833840538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05ad921d5c7dd9d46b706b1d9137435f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selected: 0
+  otherPlayer: {fileID: 0}
 --- !u!114 &114323753980749550
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -124,17 +138,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b213e53872f7d34fb06e23bfa867d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActivePlayer: 1
   speed: 3
---- !u!114 &114344990623646932
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1223689833840538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e27602d1058518419a695d358209b43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 0}
