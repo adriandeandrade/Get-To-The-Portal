@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public bool selected = false;
+    public bool isDuplicate;
 
     private GameManager gameManager;
 
@@ -27,6 +28,8 @@ public class Player : MonoBehaviour
         {
             Vector3 spawnPos = FindSplitPosition();
             GameObject split = Instantiate(gameManager.playerPrefab, spawnPos, Quaternion.identity);
+            split.name = "player dup";
+            split.GetComponent<Player>().isDuplicate = true;
             gameManager.unitSelection.otherObject = split;
             gameManager.currentSplits++;
         }
@@ -34,11 +37,6 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("Max amount of splits reached.");
         }
-    }
-
-    private void DeselectOtherPlayers()
-    {
-        selected = false;
     }
 
     private Vector3 FindSplitPosition()

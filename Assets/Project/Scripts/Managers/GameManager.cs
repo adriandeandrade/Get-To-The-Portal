@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public GameObject playerPrefab;
 
     public UnitSelection unitSelection;
+    public CameraController cameraController;
 
     [SerializeField] private Vector3 playerSpawnPos;
 
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         unitSelection = FindObjectOfType<UnitSelection>();
+        cameraController = FindObjectOfType<CameraController>();
     }
 
     private void Start()
@@ -28,6 +30,8 @@ public class GameManager : MonoBehaviour
         GameOver = false;
         player = Instantiate(playerPrefab, playerSpawnPos, Quaternion.identity);
         player.GetComponent<Player>().selected = true;
+        unitSelection.selectedObject = player;
+        unitSelection.originalObject = player;
     }
 
     public void EndLevel()

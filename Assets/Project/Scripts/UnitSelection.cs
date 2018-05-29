@@ -7,7 +7,10 @@ public class UnitSelection : MonoBehaviour
     private Ray ray;
     private RaycastHit hit = new RaycastHit();
     [SerializeField] private LayerMask targetMask;
+
     public GameObject otherObject;
+    public GameObject selectedObject;
+    public GameObject originalObject;
 
     private void Update()
     {
@@ -23,14 +26,21 @@ public class UnitSelection : MonoBehaviour
             {
                 if (hit.transform.CompareTag("Player"))
                 {
-                    
-                    GameObject g = hit.transform.gameObject; // Reference the object we hit
-                    Player p = g.GetComponent<Player>(); // Player component on referenced object above
-                    if(!p.selected)
+                    GameObject objectHit = hit.transform.gameObject; // Reference the object we hit
+                    Player p = objectHit.GetComponent<Player>(); // Player component on referenced object above
+                    if (!p.selected)
                     {
                         p.selected = true;
-                        otherObject.GetComponent<Player>().selected = false;
-                        g = otherObject;
+                        if (otherObject != null)
+                        {
+                            otherObject = selectedObject;
+                            selectedObject = objectHit;
+                            otherObject.GetComponent<Player>().selected = false;
+                        }
+                        else
+                        {
+                            Debug.Log("No duplicate detected.");
+                        }
                         Debug.Log("Object hit");
                     }
                 }

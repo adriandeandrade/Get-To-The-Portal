@@ -34,10 +34,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!GameManager.GameOver)
         {
-            if (transform.position.y < 5)
-            {
-                gameManager.OutOfBounds();
-            }
+            CheckBounds();
         }
     }
 
@@ -58,6 +55,28 @@ public class PlayerController : MonoBehaviour
         {
             AudioManager.instance.Play("PickupCoin");
             scoreManager.IncrementScore();
+        }
+    }
+
+    private void CheckBounds()
+    {
+        if (player.isDuplicate)
+        {
+            if (transform.position.y < 5)
+            {
+                Destroy(gameObject);
+                gameManager.currentSplits = 1;
+                gameManager.unitSelection.otherObject = null;
+                gameManager.unitSelection.selectedObject = gameManager.unitSelection.originalObject;
+                gameManager.unitSelection.selectedObject.GetComponent<Player>().selected = true;
+            }
+        }
+        else
+        {
+            if(transform.position.y < 5)
+            {
+                gameManager.OutOfBounds();
+            }
         }
     }
 }
