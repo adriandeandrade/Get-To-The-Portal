@@ -60,12 +60,12 @@ public class PlayerController : MonoBehaviour
 
     private void CheckBounds()
     {
-        if (player.isDuplicate)
+        if (player.isClone)
         {
             if (transform.position.y < 5)
             {
                 Destroy(gameObject);
-                gameManager.currentSplits = 1;
+                gameManager.isSplit = false;
                 gameManager.unitSelection.otherObject = null;
                 gameManager.unitSelection.selectedObject = gameManager.unitSelection.originalObject;
                 gameManager.unitSelection.selectedObject.GetComponent<Player>().selected = true;

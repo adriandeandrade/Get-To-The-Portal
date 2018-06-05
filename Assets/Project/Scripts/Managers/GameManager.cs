@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 {
     public static bool GameOver;
 
+    public bool isSplit = false;
+
     [HideInInspector] public GameObject player;
     public GameObject playerPrefab;
 
@@ -15,9 +17,6 @@ public class GameManager : MonoBehaviour
     public CameraController cameraController;
 
     [SerializeField] private Vector3 playerSpawnPos;
-
-    public int currentSplits = 1;
-    public int maxSplits = 2;
 
     private void Awake()
     {

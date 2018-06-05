@@ -8,9 +8,11 @@ public class UnitSelection : MonoBehaviour
     private RaycastHit hit = new RaycastHit();
     [SerializeField] private LayerMask targetMask;
 
+    public GameObject originalObject;
     public GameObject otherObject;
     public GameObject selectedObject;
-    public GameObject originalObject;
+
+    public List<GameObject> playerObjects = new List<GameObject>(); // This list includes the clone and original player.
 
     private void Update()
     {
